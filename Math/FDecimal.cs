@@ -1,5 +1,4 @@
 ﻿using System.Numerics;
-using System.Runtime.InteropServices;
 
 namespace Math
 {
@@ -7,12 +6,11 @@ namespace Math
     /// This is a fixed precision decimal (base 10) number, implemented on top of C#'s BigInteger class.
     /// For now, the scaling factor is hardcoded to 4. This means that there are 4 digits after the decimal.
     /// </summary>
-    public readonly struct FDecimal :
+    public readonly record struct FDecimal :
         IAdditionOperators<FDecimal, FDecimal, FDecimal>,
         ISubtractionOperators<FDecimal, FDecimal, FDecimal>,
         IMultiplyOperators<FDecimal, FDecimal, FDecimal>,
-        IDivisionOperators<FDecimal, FDecimal, FDecimal>,
-        IEqualityOperators<FDecimal, FDecimal, bool>
+        IDivisionOperators<FDecimal, FDecimal, FDecimal>
     {
         public const int Scale = 4;
         public static readonly BigInteger ScaleFactor = BigInteger.Pow(10, Scale);
@@ -54,9 +52,5 @@ namespace Math
         public static FDecimal operator *(FDecimal left, FDecimal right) => new(RDiv(left.Number * right.Number, ScaleFactor));
 
         public static FDecimal operator /(FDecimal left, FDecimal right) => new(RDiv(left.Number * ScaleFactor, right.Number));
-
-        public static bool operator ==(FDecimal left, FDecimal right) => left.Number == right.Number;
-
-        public static bool operator !=(FDecimal left, FDecimal right) => left.Number != right.Number;
     }
 }

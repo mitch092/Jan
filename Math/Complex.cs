@@ -2,12 +2,11 @@
 
 namespace Math
 {
-    public readonly struct Complex :
+    public readonly record struct Complex :
         IAdditionOperators<Complex, Complex, Complex>,
         ISubtractionOperators<Complex, Complex, Complex>,
         IMultiplyOperators<Complex, Complex, Complex>,
-        IDivisionOperators<Complex, Complex, Complex>,
-        IEqualityOperators<Complex, Complex, bool>
+        IDivisionOperators<Complex, Complex, Complex>
     {
         public readonly FDecimal Real;
         public readonly FDecimal Imaginary;
@@ -42,10 +41,6 @@ namespace Math
             FDecimal imaginary = left.Imaginary * right.Real - left.Real * right.Imaginary;
             return new(real / denom, imaginary / denom);
         }
-
-        public static bool operator ==(Complex left, Complex right) => left.Real == right.Real && left.Imaginary == right.Imaginary;
-
-        public static bool operator !=(Complex left, Complex right) => !(left == right);
 
         public static Complex Exp(Complex x)
         {
