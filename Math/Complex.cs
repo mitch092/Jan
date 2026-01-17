@@ -77,6 +77,8 @@ namespace Math
             return yn1;
         }
 
+        public static readonly Complex E = Exp(new Complex(1));
+
         public static Complex Pow(Complex x, Complex y) => Exp(y * Ln(x));
 
         public static Complex Sqrt(Complex x) => Pow(x, new Complex(1) / new Complex(2));
@@ -85,12 +87,18 @@ namespace Math
 
         public static Complex Sin(Complex x) => (Exp(new Complex(0, 1) * x) - Exp(new Complex(0, -1) * x)) / new Complex(0, 2);
 
-        public static Complex Cos(Complex x) => (Exp(new Complex(0, 1) * x) - Exp(new Complex(0, -1) * x)) / new Complex(2, 0);
+        public static Complex Cos(Complex x) => (Exp(new Complex(0, 1) * x) + Exp(new Complex(0, -1) * x)) / new Complex(2, 0);
 
         public static Complex Tan(Complex x) => Sin(x) / Cos(x);
 
         public static Complex Sinh(Complex x) => (Exp(x) - Exp(new Complex(-1) * x)) / new Complex(2);
 
         public static Complex Cosh(Complex x) => (Exp(x) + Exp(new Complex(-1) * x)) / new Complex(2);
+
+        public static Complex Arcsin(Complex x) => new Complex(0, -1) * Ln(new Complex(0, 1) * x + Sqrt(new Complex(1) - x * x));
+
+        public static Complex Arccos(Complex x) => new Complex(0, -1) * Ln(x + new Complex(0, 1) * Sqrt(new Complex(1) - x * x));
+
+        public static Complex Arctan(Complex x) => new Complex(0, 1) / new Complex(2, 0) * Ln(new Complex(0, 1) + x / new Complex(0, 1) - x);
     }
 }
