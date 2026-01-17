@@ -58,6 +58,7 @@ namespace Math
             {
                 term /= new Complex(FDecimal.FromInt(i));
                 term *= x;
+                oldSum = sum;
                 sum += term;
                 ++i;
             }
