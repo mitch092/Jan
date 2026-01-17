@@ -86,6 +86,6 @@ namespace Math
 
         public static Complex Sqrt(Complex x) => Pow(x, new Complex(1) / new Complex(2));
 
-        public static Complex Log(Complex x, Complex b) => Ln(x) / Ln(x);
+        public static Complex Log(Complex x, Complex b) => Ln(x) / Ln(b);
     }
 }
