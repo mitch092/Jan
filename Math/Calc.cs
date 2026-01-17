@@ -62,7 +62,7 @@ namespace Math
             "-" => (a, b) => a - b,
             "*" => (a, b) => a * b,
             "/" => (a, b) => a / b,
-            "^" => (a, b) => BigDecimal.Exp(b * BigDecimal.Ln(a)),
+            "^" => (a, b) => BigDecimal.Pow(a, b, 10),
             "log" => (a, b) => BigDecimal.Ln(a) / BigDecimal.Ln(b),
             _ => null,
         };
