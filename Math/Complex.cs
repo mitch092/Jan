@@ -47,7 +47,7 @@ namespace Math
 
         public static bool operator !=(Complex left, Complex right) => !(left == right);
 
-        public static Complex Exp(Complex number)
+        public static Complex Exp(Complex x)
         {
             Complex term = new(FDecimal.FromInt(1));
             Complex sum = new(FDecimal.FromInt(1));
@@ -57,12 +57,28 @@ namespace Math
             while (oldSum != sum)
             {
                 term /= new Complex(FDecimal.FromInt(i));
-                term *= number;
+                term *= x;
                 sum += term;
                 ++i;
             }
 
             return sum;
+        }
+
+        public static Complex Ln(Complex x) 
+        {
+            Complex yn = x - new Complex(FDecimal.FromInt(1));
+            Complex yn1 = yn;
+            Complex two = new(FDecimal.FromInt(2));
+
+            do
+            {
+                yn = yn1;
+                Complex exp = Exp(yn);
+                yn1 = yn + two * (x - exp) / (x + exp);
+            } while (yn != yn1);
+
+            return yn1;
         }
     }
 }
