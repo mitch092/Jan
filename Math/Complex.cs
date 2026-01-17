@@ -104,5 +104,7 @@ namespace Math
         public static Complex Arctan(Complex x) => new Complex(0, 1) / new Complex(2, 0) * Ln(new Complex(0, 1) + x / new Complex(0, 1) - x);
 
         public static readonly Complex Pi = new Complex(16) * Arctan(Inv(new Complex(5))) - new Complex(4) * Arctan(Inv(new Complex(239)));
+
+        public static readonly Complex Tau = Pi * new Complex(2);
     }
 }
