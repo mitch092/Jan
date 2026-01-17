@@ -52,15 +52,15 @@ namespace Math
             Complex term = new(1);
             Complex sum = new(1);
             Complex oldSum = new(0);
+            Complex i = new(1);
 
-            int i = 1;
             while (oldSum != sum)
             {
-                term /= new Complex(i);
+                term /= i;
                 term *= x;
                 oldSum = sum;
                 sum += term;
-                ++i;
+                i += new Complex(1);
             }
 
             return sum;
