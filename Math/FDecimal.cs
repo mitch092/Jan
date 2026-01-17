@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using System.Runtime.InteropServices;
 
 namespace Math
 {
@@ -10,16 +11,19 @@ namespace Math
         IAdditionOperators<FDecimal, FDecimal, FDecimal>,
         ISubtractionOperators<FDecimal, FDecimal, FDecimal>,
         IMultiplyOperators<FDecimal, FDecimal, FDecimal>,
-        IDivisionOperators<FDecimal, FDecimal, FDecimal>
+        IDivisionOperators<FDecimal, FDecimal, FDecimal>,
+        IEqualityOperators<FDecimal, FDecimal, bool>
     {
         public const int Scale = 4;
         public static readonly BigInteger ScaleFactor = BigInteger.Pow(10, Scale);
         public readonly BigInteger Number;
 
-        public FDecimal(BigInteger number)
+        private FDecimal(BigInteger number)
         {
             Number = number;
         }
+
+        public static FDecimal FromInt(int num) => new(num * ScaleFactor);
 
         /// <summary>
         /// This function divides BigIntegers and uses the remainder for banker's rounding.
@@ -48,5 +52,9 @@ namespace Math
         public static FDecimal operator *(FDecimal left, FDecimal right) => new(RDiv(left.Number * right.Number, ScaleFactor));
 
         public static FDecimal operator /(FDecimal left, FDecimal right) => new(RDiv(left.Number * ScaleFactor, right.Number));
+
+        public static bool operator ==(FDecimal left, FDecimal right) => left.Number == right.Number;
+
+        public static bool operator !=(FDecimal left, FDecimal right) => left.Number != right.Number;
     }
 }

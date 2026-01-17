@@ -12,7 +12,8 @@ namespace Math
         IAdditionOperators<FDecimal2, FDecimal2, FDecimal2>,
         ISubtractionOperators<FDecimal2, FDecimal2, FDecimal2>,
         IMultiplyOperators<FDecimal2, FDecimal2, FDecimal2>,
-        IDivisionOperators<FDecimal2, FDecimal2, FDecimal2>
+        IDivisionOperators<FDecimal2, FDecimal2, FDecimal2>,
+        IEqualityOperators<FDecimal2, FDecimal2, bool>
     {
         public const int WorkingScale = 8;
         public const int OutputScale = 4;
@@ -23,11 +24,13 @@ namespace Math
 
         public static BigInteger Pow10(int number) => PowersOf10.GetOrAdd(number, val => BigInteger.Pow(10, val));
 
-        public FDecimal2(BigInteger number, int scale = WorkingScale)
+        private FDecimal2(BigInteger number, int scale = WorkingScale)
         {
             Scale = scale;
             Number = number;
         }
+
+        public static FDecimal2 FromInt(int num) => new(num * Pow10(WorkingScale));
 
         public FDecimal2 WithScale(int newScale)
         {
@@ -97,6 +100,18 @@ namespace Math
             BigInteger q = num / right.Number;
             FDecimal2 tmp = new(q, workScale);
             return tmp.WithScale(WorkingScale);
+        }
+
+        public static bool operator ==(FDecimal2 left, FDecimal2 right)
+        {
+            Align(ref left, ref right);
+            return left.Number == right.Number;
+        }
+
+        public static bool operator !=(FDecimal2 left, FDecimal2 right)
+        {
+            Align(ref left, ref right);
+            return left.Number != right.Number;
         }
     }
 }
