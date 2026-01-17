@@ -88,5 +88,9 @@ namespace Math
         public static Complex Cos(Complex x) => (Exp(new Complex(0, 1) * x) - Exp(new Complex(0, -1) * x)) / new Complex(2, 0);
 
         public static Complex Tan(Complex x) => Sin(x) / Cos(x);
+
+        public static Complex Sinh(Complex x) => (Exp(x) - Exp(new Complex(-1) * x)) / new Complex(2);
+
+        public static Complex Cosh(Complex x) => (Exp(x) + Exp(new Complex(-1) * x)) / new Complex(2);
     }
 }
