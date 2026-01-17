@@ -79,6 +79,8 @@ namespace Math
 
         public static readonly Complex E = Exp(new Complex(1));
 
+        public static Complex Inv(Complex x) => new Complex(1) / x;
+
         public static Complex Pow(Complex x, Complex y) => Exp(y * Ln(x));
 
         public static Complex Sqrt(Complex x) => Pow(x, new Complex(1) / new Complex(2));
@@ -100,5 +102,7 @@ namespace Math
         public static Complex Arccos(Complex x) => new Complex(0, -1) * Ln(x + new Complex(0, 1) * Sqrt(new Complex(1) - x * x));
 
         public static Complex Arctan(Complex x) => new Complex(0, 1) / new Complex(2, 0) * Ln(new Complex(0, 1) + x / new Complex(0, 1) - x);
+
+        public static readonly Complex Pi = new Complex(16) * Arctan(Inv(new Complex(5))) - new Complex(4) * Arctan(Inv(new Complex(239)));
     }
 }
