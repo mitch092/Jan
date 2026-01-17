@@ -87,5 +87,11 @@ namespace Math
         public static Complex Sqrt(Complex x) => Pow(x, new Complex(1) / new Complex(2));
 
         public static Complex Log(Complex x, Complex b) => Ln(x) / Ln(b);
+
+        public static Complex Sin(Complex x) => (Exp(new Complex(0, 1) * x) - Exp(new Complex(0, -1) * x)) / new Complex(0, 2);
+
+        public static Complex Cos(Complex x) => (Exp(new Complex(0, 1) * x) - Exp(new Complex(0, -1) * x)) / new Complex(2, 0);
+
+        public static Complex Tan(Complex x) => Sin(x) / Cos(x);
     }
 }
