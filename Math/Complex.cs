@@ -21,7 +21,7 @@ namespace Math
         public Complex(FDecimal real)
         {
             Real = real;
-            Imaginary = FDecimal.FromInt(0);
+            Imaginary = 0;
         }
 
         public static Complex operator +(Complex left, Complex right) => new(left.Real + right.Real, left.Imaginary + right.Imaginary);
@@ -49,14 +49,14 @@ namespace Math
 
         public static Complex Exp(Complex x)
         {
-            Complex term = new(FDecimal.FromInt(1));
-            Complex sum = new(FDecimal.FromInt(1));
-            Complex oldSum = new(FDecimal.FromInt(0));
+            Complex term = new(1);
+            Complex sum = new(1);
+            Complex oldSum = new(0);
 
             int i = 1;
             while (oldSum != sum)
             {
-                term /= new Complex(FDecimal.FromInt(i));
+                term /= new Complex(i);
                 term *= x;
                 oldSum = sum;
                 sum += term;
@@ -66,11 +66,11 @@ namespace Math
             return sum;
         }
 
-        public static Complex Ln(Complex x) 
+        public static Complex Ln(Complex x)
         {
-            Complex yn = x - new Complex(FDecimal.FromInt(1));
+            Complex yn = x - new Complex(1);
             Complex yn1 = yn;
-            Complex two = new(FDecimal.FromInt(2));
+            Complex two = new(2);
 
             do
             {
@@ -81,5 +81,11 @@ namespace Math
 
             return yn1;
         }
+
+        public static Complex Pow(Complex x, Complex y) => Exp(y * Ln(x));
+
+        public static Complex Sqrt(Complex x) => Pow(x, new Complex(1) / new Complex(2));
+
+        public static Complex Log(Complex x, Complex b) => Ln(x) / Ln(x);
     }
 }

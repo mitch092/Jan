@@ -32,6 +32,8 @@ namespace Math
 
         public static FDecimal2 FromInt(int num) => new(num * Pow10(WorkingScale));
 
+        public static implicit operator FDecimal2(int num) => FromInt(num);
+
         public FDecimal2 WithScale(int newScale)
         {
             if (newScale == Scale) return this;

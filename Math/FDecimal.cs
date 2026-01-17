@@ -25,6 +25,8 @@ namespace Math
 
         public static FDecimal FromInt(int num) => new(num * ScaleFactor);
 
+        public static implicit operator FDecimal(int num) => FromInt(num);
+
         /// <summary>
         /// This function divides BigIntegers and uses the remainder for banker's rounding.
         /// </summary>
