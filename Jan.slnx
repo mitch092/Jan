@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="Jan/Jan.csproj" />
+  <Project Path="Math/Math.csproj" Id="ca046510-80d6-49b3-bdad-5179d30a4c98" />
 </Solution>
