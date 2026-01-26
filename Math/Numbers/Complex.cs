@@ -22,11 +22,6 @@ namespace Math.Numbers
 
         public static Complex<T> FromInt(int num) => new(num);
 
-        public int CompareTo(Complex<T> other)
-        {
-            throw new NotImplementedException();
-        }
-
         public static Complex<T> operator +(Complex<T> left, Complex<T> right) => new(left.Real + right.Real, left.Imaginary + right.Imaginary);
 
         public static Complex<T> operator -(Complex<T> left, Complex<T> right) => new(left.Real - right.Real, left.Imaginary - right.Imaginary);

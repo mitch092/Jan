@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace Math.Numbers
 {
-    public readonly record struct BigRational : IField<BigRational>
+    public readonly record struct BigRational : IOrderedField<BigRational>
     {
         public readonly BigInteger Num;
         public readonly BigInteger Den;

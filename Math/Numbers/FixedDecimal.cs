@@ -7,7 +7,7 @@ namespace Math.Numbers
     /// <summary>
     /// This is a fixed precision decimal (base 10) number, implemented on top of C#'s BigInteger class.
     /// </summary>
-    public readonly record struct FixedDecimal : IField<FixedDecimal>
+    public readonly record struct FixedDecimal : IOrderedField<FixedDecimal>
     {
         private static readonly ConcurrentDictionary<int, BigInteger> PowersOf10 = [];
         public static BigInteger Pow10(int number) => PowersOf10.GetOrAdd(number, val => BigInteger.Pow(10, val));
@@ -21,7 +21,9 @@ namespace Math.Numbers
             Scale = scale;
         }
 
-        public static FixedDecimal FromInt(int num) => new(num, 1);
+        public static FixedDecimal FromInt(int num) => new(num, 10);
+
+        public BigRational ToRational() => new(Number, Pow10(Scale));
 
         /// <summary>
         /// This function divides BigIntegers and uses the remainder for banker's rounding.
