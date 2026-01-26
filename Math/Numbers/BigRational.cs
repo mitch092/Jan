@@ -34,6 +34,8 @@ namespace Math.Numbers
             }
         }
 
+        public static BigRational FromInt(int num) => new(num, 1);
+
         public static BigRational operator +(BigRational left, BigRational right) => new(left.Num * right.Den + right.Num * left.Den, left.Den * right.Den);
 
         public static BigRational operator -(BigRational left, BigRational right) => new(left.Num * right.Den - right.Num * left.Den, left.Den * right.Den);
@@ -41,6 +43,13 @@ namespace Math.Numbers
         public static BigRational operator *(BigRational left, BigRational right) => new(left.Num * right.Num, left.Den * right.Den);
 
         public static BigRational operator /(BigRational left, BigRational right) => new(left.Num * right.Den, left.Den * right.Num);
+
+        public int CompareTo(BigRational other)
+        {
+            BigInteger a = Num * other.Den;
+            BigInteger b = Den * other.Num;
+            return a.CompareTo(b);
+        }
 
         /// <summary>
         /// Eventually, I would like to make a ToString() that displays the rational as a decimal string,
@@ -59,5 +68,8 @@ namespace Math.Numbers
                 return $"{quotient} {remainder}/{Den}";
             }
         }
+
+        // TODO: Add ToParse method that reads decimal strings into a BigRational.
+        //ToParse
     }
 }

@@ -101,5 +101,11 @@ namespace Math.Numbers
             BigInteger quotient = RDiv(numerator, right.Number);
             return new(quotient, left.Scale);
         }
+
+        public int CompareTo(FixedDecimal other)
+        {
+            (FixedDecimal left, FixedDecimal right) = Align(this, other);
+            return left.CompareTo(right);
+        }
     }
 }
