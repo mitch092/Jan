@@ -2,7 +2,7 @@
 
 namespace Math
 {
-    public static class Calc
+    public static class Calculator
     {
         public static List<BigDecimal> Calculate(string input)
         {

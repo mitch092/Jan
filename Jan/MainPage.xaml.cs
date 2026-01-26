@@ -32,7 +32,7 @@ namespace Jan
             await foreach (string input in InputChannel.Reader.ReadAllAsync()) 
             {
                 Items.Clear();
-                foreach (var item in Calc.Calculate(input))
+                foreach (var item in Calculator.Calculate(input))
                 {
                     Items.Add(new Item() { Number = item.ToString() });
                 }
