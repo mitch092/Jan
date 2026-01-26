@@ -21,6 +21,8 @@ namespace Math.Numbers
             Scale = scale;
         }
 
+        public static FixedDecimal FromInt(int num) => new(num, 1);
+
         /// <summary>
         /// This function divides BigIntegers and uses the remainder for banker's rounding.
         /// </summary>

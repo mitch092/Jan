@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Math.Interfaces
 {
@@ -10,6 +11,6 @@ namespace Math.Interfaces
         IDivisionOperators<T, T, T>
         where T : IField<T>
     {
-        // FromRational()
+        public static abstract T FromInt(int num);
     }
 }
