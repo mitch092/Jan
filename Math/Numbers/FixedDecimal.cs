@@ -2,7 +2,7 @@
 using System.Collections.Concurrent;
 using System.Numerics;
 
-namespace Math
+namespace Math.Numbers
 {
     /// <summary>
     /// This is a fixed precision decimal (base 10) number, implemented on top of C#'s BigInteger class.

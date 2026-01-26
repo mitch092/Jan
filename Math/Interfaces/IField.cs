@@ -12,6 +12,6 @@ namespace Math.Interfaces
         IDivisionOperators<T, T, T>
         where T : IField<T>
     {
-
+        // FromRational()
     }
 }

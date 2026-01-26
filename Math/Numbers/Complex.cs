@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace Math
+namespace Math.Numbers
 {
     public readonly record struct Complex :
         IAdditionOperators<Complex, Complex, Complex>,
