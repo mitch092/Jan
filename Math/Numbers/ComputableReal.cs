@@ -21,7 +21,7 @@ namespace Math.Numbers
             return new(a - one, a + one);
         }
 
-        public ComputableReal Apply(ComputableReal other, Func<FixedDecimal, FixedDecimal, FixedDecimal> op, bool zeroCheck = false)
+        public ComputableReal Apply(ComputableReal other, Func<FixedDecimal, FixedDecimal, FixedDecimal> op, bool checkZero = false)
         {
             ComputableReal cr = this;
             return new ComputableReal(p =>
@@ -31,7 +31,7 @@ namespace Math.Numbers
                 {
                     g += 2;
                     Interval<FixedDecimal> b = other.GetInterval(g);
-                    if (zeroCheck == false || b.CompareTo(new Interval<FixedDecimal>(new FixedDecimal(0, g))) != PartialOrdering.Indeterminate)
+                    if (checkZero == false || b.CompareTo(new Interval<FixedDecimal>(new FixedDecimal(0, g))) != PartialOrdering.Indeterminate)
                     {
                         Interval<FixedDecimal> a = cr.GetInterval(g);
                         Interval<FixedDecimal> val = a.Apply(b, op);
