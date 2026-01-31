@@ -2,7 +2,7 @@
 
 namespace Math.Numbers
 {
-    public readonly record struct Complex<T> : IField<Complex<T>>
+    public readonly struct Complex<T> : IField<Complex<T>>
         where T : IComplexBase<T>
     {
         public readonly T Real;

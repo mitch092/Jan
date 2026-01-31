@@ -1,5 +1,4 @@
 ﻿using Math.Interfaces;
-using System.Collections.Concurrent;
 using System.Numerics;
 
 namespace Math.Numbers
@@ -7,11 +6,8 @@ namespace Math.Numbers
     /// <summary>
     /// This is a fixed precision decimal (base 10) number, implemented on top of C#'s BigInteger class.
     /// </summary>
-    public readonly record struct FixedDecimal : IOrderedField<FixedDecimal>
+    public readonly struct FixedDecimal : IOrderedField<FixedDecimal>
     {
-        private static readonly ConcurrentDictionary<int, BigInteger> PowersOf10 = [];
-        public static BigInteger Pow10(int number) => PowersOf10.GetOrAdd(number, val => BigInteger.Pow(10, val));
-
         public readonly BigInteger Number;
         public readonly int Scale;
 
@@ -23,27 +19,7 @@ namespace Math.Numbers
 
         public static FixedDecimal FromInt(int num) => new(num, 10);
 
-        public BigRational ToRational() => new(Number, Pow10(Scale));
-
-        /// <summary>
-        /// This function divides BigIntegers and uses the remainder for banker's rounding.
-        /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns></returns>
-        public static BigInteger RDiv(BigInteger left, BigInteger right)
-        {
-            (BigInteger q, BigInteger r) = BigInteger.DivRem(left, right);
-            if (r.IsZero) return q;
-
-            BigInteger twiceR = BigInteger.Abs(r) * 2;
-            BigInteger den = BigInteger.Abs(right);
-
-            if (twiceR < den) return q;
-            if (twiceR > den) return q + q.Sign;
-
-            return q.IsEven ? q : q + q.Sign;
-        }
+        public BigRational ToRational() => new(Number, MathUtils.Pow10(Scale));
 
         public FixedDecimal Rescale(int newScale)
         {
@@ -54,13 +30,13 @@ namespace Math.Numbers
             }
             else if (shift > 0)
             {
-                BigInteger div = Pow10(shift);
-                return new(RDiv(Number, div), shift);
+                BigInteger div = MathUtils.Pow10(shift);
+                return new(MathUtils.RDiv(Number, div), shift);
             }
             else
             {
                 int absShift = -shift;
-                BigInteger mul = Pow10(absShift);
+                BigInteger mul = MathUtils.Pow10(absShift);
                 return new(Number * mul, absShift);
             }
         }
@@ -101,8 +77,8 @@ namespace Math.Numbers
         public static FixedDecimal operator /(FixedDecimal left, FixedDecimal right)
         {
             (left, right) = Align(left, right);
-            BigInteger numerator = left.Number * Pow10(left.Scale);
-            BigInteger quotient = RDiv(numerator, right.Number);
+            BigInteger numerator = left.Number * MathUtils.Pow10(left.Scale);
+            BigInteger quotient = MathUtils.RDiv(numerator, right.Number);
             return new(quotient, left.Scale);
         }
 
@@ -111,5 +87,8 @@ namespace Math.Numbers
             (FixedDecimal left, FixedDecimal right) = Align(this, other);
             return left.CompareTo(right);
         }
+
+        // TODO: Implement TryParse and ToString for decimal strings.
+        // use regex for parsing inputs.
     }
 }
