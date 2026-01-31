@@ -1,5 +1,6 @@
 ﻿using Math.Interfaces;
 using System.Numerics;
+using static Math.MathUtils;
 
 namespace Math.Numbers
 {
@@ -19,7 +20,7 @@ namespace Math.Numbers
 
         public static FixedDecimal FromInt(int num) => new(num, 10);
 
-        public BigRational ToRational() => new(Number, MathUtils.Pow10(Scale));
+        public BigRational ToRational() => new(Number, Pow10(Scale));
 
         public FixedDecimal Rescale(int newScale)
         {
@@ -30,14 +31,14 @@ namespace Math.Numbers
             }
             else if (shift > 0)
             {
-                BigInteger div = MathUtils.Pow10(shift);
-                return new(MathUtils.RDiv(Number, div), shift);
+                BigInteger div = Pow10(shift);
+                return new(RDiv(Number, div), newScale);
             }
             else
             {
                 int absShift = -shift;
-                BigInteger mul = MathUtils.Pow10(absShift);
-                return new(Number * mul, absShift);
+                BigInteger mul = Pow10(absShift);
+                return new(Number * mul, newScale);
             }
         }
 
@@ -77,8 +78,8 @@ namespace Math.Numbers
         public static FixedDecimal operator /(FixedDecimal left, FixedDecimal right)
         {
             (left, right) = Align(left, right);
-            BigInteger numerator = left.Number * MathUtils.Pow10(left.Scale);
-            BigInteger quotient = MathUtils.RDiv(numerator, right.Number);
+            BigInteger numerator = left.Number * Pow10(left.Scale);
+            BigInteger quotient = RDiv(numerator, right.Number);
             return new(quotient, left.Scale);
         }
 
