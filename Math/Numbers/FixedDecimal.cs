@@ -12,9 +12,9 @@ namespace Math.Numbers
         public readonly BigInteger Number;
         public readonly int Scale;
 
-        private FixedDecimal(BigInteger number, int scale)
+        public FixedDecimal(BigInteger number, int scale)
         {
-            Number = number;
+            Number = number * Pow10(scale);
             Scale = scale;
         }
 

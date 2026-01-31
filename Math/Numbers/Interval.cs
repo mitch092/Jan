@@ -23,14 +23,6 @@ namespace Math.Numbers
 
         public Interval(T val) : this(val, val) { }
 
-        public enum PartialOrdering
-        {
-            LessThan,
-            GreaterThan,
-            Equal,
-            Indeterminate
-        }
-
         /// <summary>
         /// Returns whether or not this instance is less than,
         /// greater than, or equal to the other instance.
@@ -60,14 +52,14 @@ namespace Math.Numbers
 
         public bool IsPoint => Lower.CompareTo(Upper) == 0;
 
-        public static Interval<T> Apply(Interval<T> interval, Func<T, T> op) => new(op(interval.Lower), op(interval.Upper));
+        public Interval<T> Apply(Func<T, T> op) => new(op(Lower), op(Upper));
 
-        public static Interval<T> Apply(Interval<T> left, Interval<T> right, Func<T, T, T> op)
+        public Interval<T> Apply(Interval<T> other, Func<T, T, T> op)
         {
-            T a = op(left.Lower, right.Lower);
-            T b = op(left.Lower, right.Upper);
-            T c = op(left.Upper, right.Lower);
-            T d = op(left.Upper, right.Upper);
+            T a = op(Lower, other.Lower);
+            T b = op(Lower, other.Upper);
+            T c = op(Upper, other.Lower);
+            T d = op(Upper, other.Upper);
             T lower = Min(Min(a, b), Min(c, d));
             T upper = Max(Max(a, b), Max(c, d));
             return new(lower, upper);
