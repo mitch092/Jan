@@ -21,23 +21,25 @@ namespace Math.Numbers
             return new(a - one, a + one);
         }
 
-        public ComputableReal Apply(ComputableReal other, Func<FixedDecimal, FixedDecimal, FixedDecimal> op)
+        public ComputableReal Apply(ComputableReal other, Func<FixedDecimal, FixedDecimal, FixedDecimal> op, bool zeroCheck = false)
         {
             ComputableReal cr = this;
             return new ComputableReal(p =>
             {
-                int g = p + 2;
-
+                int g = p;
                 while (true)
                 {
-                    Interval<FixedDecimal> a = cr.GetInterval(g);
-                    Interval<FixedDecimal> b = other.GetInterval(g);
-                    Interval<FixedDecimal> val = a.Apply(b, op);
-                    if (TryCertify(val, p, out var r))
-                    {
-                        return r;
-                    }
                     g += 2;
+                    Interval<FixedDecimal> b = other.GetInterval(g);
+                    if (zeroCheck == false || b.CompareTo(new Interval<FixedDecimal>(new FixedDecimal(0, g))) != PartialOrdering.Indeterminate)
+                    {
+                        Interval<FixedDecimal> a = cr.GetInterval(g);
+                        Interval<FixedDecimal> val = a.Apply(b, op);
+                        if (TryCertify(val, p, out var r))
+                        {
+                            return r;
+                        }
+                    }
                 }
             });
         }
@@ -48,29 +50,6 @@ namespace Math.Numbers
 
         public static ComputableReal operator *(ComputableReal left, ComputableReal right) => left.Apply(right, (a, b) => a * b);
 
-        public static ComputableReal operator /(ComputableReal left, ComputableReal right)
-        {
-            return new ComputableReal(p =>
-            {
-                int g = p + 2;
-
-                while (true)
-                {
-                    Interval<FixedDecimal> b = right.GetInterval(g);
-                    Interval<FixedDecimal> zero = new(new FixedDecimal(0, g));
-                    if (b.CompareTo(zero) != PartialOrdering.Indeterminate)
-                    {
-                        Interval<FixedDecimal> a = left.GetInterval(g);
-                        Interval<FixedDecimal> val = a.Apply(b, (a, b) => a / b);
-                        if (TryCertify(val, p, out var r))
-                        {
-                            return r;
-                        }
-                    }
-
-                    g += 2;
-                }
-            });
-        }
+        public static ComputableReal operator /(ComputableReal left, ComputableReal right) => left.Apply(right, (a, b) => a / b, true);
     }
 }
